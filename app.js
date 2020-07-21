@@ -2,8 +2,8 @@ const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
 
-// inquirer prompts
-// var restart = function () {
+// Initial prompt that will redirect to Follow up Functions
+// ========================================================
 inquirer.prompt(
         [{
             type: "list",
@@ -27,8 +27,20 @@ inquirer.prompt(
             addRoles();
         } else if (data.prompt === 'Add Employees') {
             addEmployees();
+        } else if (data.prompt === 'View Departments'){
+            showDepartments();
+        } else if (data.prompt === 'View Roles'){
+            showRoles();
+        }
+         else if (data.prompt === 'View Employees'){
+            showEmployees();
+        } else if (data.prompt === 'Update Employee Roles'){
+            updateRoles();
         }
     });
+
+// Follow up Functions
+// ===================
 
 var addDepartments = () => {
     inquirer.prompt([{
@@ -85,9 +97,28 @@ var addEmployees = () => {
         // Extract Role Name 
         console.log(
             data.first_name,
-            data.lastname,
+            data.last_name,
             data.role_id,
             data.manager_id
         );
     })
 }
+
+// Take departments from db and display here
+var showDepartments = () => {
+    console.log("Put Departments Here");
+}
+
+var showRoles = () => {
+    console.log("Put Roles Here");
+}
+
+// Take employees from db and display here
+var showEmployees = () => {
+    console.log("Put Employees Here");
+}
+
+// Update Employees 
+var updateRoles = () => {
+    console.log("Update Employees Here");
+} 
