@@ -19,6 +19,24 @@ var connection = mysql.createConnection({
 connection.connect(function(err) {
     // if (err) throw err;
     console.log("connected as id " + connection.threadId + "\n");
-    // createProduct();
+    createEmployee();
 
 });
+
+function createEmployee() {
+  console.log("Inserting a new product...\n");
+  var query = connection.query(
+    "INSERT INTO employee SET ?",
+    {
+      first_name: "Jill",
+      last_name: "Joolian",
+      role_id: 3,
+      manager_id: 1
+    },
+    function(err, res) {
+      console.log(res.affectedRows + " product inserted!\n");
+      // Call updateProduct AFTER the INSERT completes
+      // updateProduct();
+    }
+  );
+}
