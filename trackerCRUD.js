@@ -27,6 +27,9 @@ connection.connect(function (err) {
 // Alter Data Base Functions
 // =========================
 
+// Add Functions
+// ========================= 
+
 // Add Employee
 function addEmployee() {
   console.log("Inserting a new employee...\n");
@@ -74,10 +77,35 @@ function addRole() {
   console.log(query.sql);
 }
 
+// VIEW Functionctions
+// ===================
+
 // Read Employee Role
 function readEmployeeRole() {
-  console.log("Selecting all products...\n");
+  console.log("Selecting all employees...\n");
   connection.query("SELECT * FROM employee_role", function(err, res) {
+    if (err) throw err;
+    // Log all results of the SELECT statement
+    console.log(res);
+    connection.end();
+  });
+}
+
+// Read Department 
+function readDepartment() {
+  console.log("Selecting department table...\n");
+  connection.query("SELECT * FROM department", function(err, res) {
+    if (err) throw err;
+    // Log all results of the SELECT statement
+    console.log(res);
+    connection.end();
+  });
+}
+
+// Read Employee 
+function readEmployees() {
+  console.log("Selecting roles table...\n");
+  connection.query("SELECT * FROM employee", function(err, res) {
     if (err) throw err;
     // Log all results of the SELECT statement
     console.log(res);
