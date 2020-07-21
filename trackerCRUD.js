@@ -19,11 +19,12 @@ var connection = mysql.createConnection({
 connection.connect(function(err) {
     // if (err) throw err;
     console.log("connected as id " + connection.threadId + "\n");
-    createEmployee();
+    addDepartment();
+
 
 });
 
-function createEmployee() {
+function addEmployee() {
   console.log("Inserting a new product...\n");
   var query = connection.query(
     "INSERT INTO employee SET ?",
@@ -39,4 +40,17 @@ function createEmployee() {
       // updateProduct();
     }
   );
+}
+
+function addDepartment() {
+  console.log("Inserting a new product... \n");
+  var query = connection.query(
+    "INSERT INTO department SET ?", 
+    {
+      _name: "Sales"
+    },
+    function(err, res) {
+      console.log(res.affectedRows + " prudct inserted!\n");
+    }
+  )
 }
