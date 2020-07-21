@@ -19,13 +19,13 @@ var connection = mysql.createConnection({
 connection.connect(function(err) {
     // if (err) throw err;
     console.log("connected as id " + connection.threadId + "\n");
-    addDepartment();
+    addRole();
 
 
 });
 
 function addEmployee() {
-  console.log("Inserting a new product...\n");
+  console.log("Inserting a new employee...\n");
   var query = connection.query(
     "INSERT INTO employee SET ?",
     {
@@ -35,7 +35,7 @@ function addEmployee() {
       manager_id: 1
     },
     function(err, res) {
-      console.log(res.affectedRows + " product inserted!\n");
+      console.log(res.affectedRows + " employee inserted!\n");
       // Call updateProduct AFTER the INSERT completes
       // updateProduct();
     }
@@ -43,14 +43,30 @@ function addEmployee() {
 }
 
 function addDepartment() {
-  console.log("Inserting a new product... \n");
+  console.log("Inserting a new department... \n");
   var query = connection.query(
     "INSERT INTO department SET ?", 
     {
       _name: "Sales"
     },
     function(err, res) {
-      console.log(res.affectedRows + " prudct inserted!\n");
+      console.log(res.affectedRows + " department inserted!\n");
     }
   )
 }
+
+function addRole() {
+  console.log("Inserting a new role... \n");
+  var query = connection.query(
+    "INSERT INTO employee_role SET ?", 
+    {
+      title: "Lawyer",
+      salary: 132000.00,
+      department_id: 2
+    },
+    function(err, res) {
+      console.log(res.affectedRows + " role inserted!\n");
+    }
+  )
+}
+
