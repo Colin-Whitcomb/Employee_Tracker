@@ -42,6 +42,7 @@ inquirer.prompt(
 // Follow up Functions
 // ===================
 
+// Add Department
 var addDepartments = () => {
     inquirer.prompt([{
         // Name
@@ -54,6 +55,7 @@ var addDepartments = () => {
     })
 }
 
+// Add Roles
 var addRoles = () => {
     inquirer.prompt([{
         // Name
@@ -66,6 +68,7 @@ var addRoles = () => {
     })
 }
 
+// Add Employees
 var addEmployees = () => {
     inquirer.prompt([{
             // First Name
@@ -109,6 +112,7 @@ var showDepartments = () => {
     console.log("Put Departments Here");
 }
 
+// Take roles from db and display here
 var showRoles = () => {
     console.log("Put Roles Here");
 }

@@ -16,57 +16,71 @@ var connection = mysql.createConnection({
   database: "employee_trackerDB"
 });
 
-connection.connect(function(err) {
-    // if (err) throw err;
-    console.log("connected as id " + connection.threadId + "\n");
-    addRole();
+connection.connect(function (err) {
+  // if (err) throw err;
+  console.log("connected as id " + connection.threadId + "\n");
+  readEmployeeRole();
 
 
 });
 
+// Alter Data Base Functions
+// =========================
+
+// Add Employee
 function addEmployee() {
   console.log("Inserting a new employee...\n");
   var query = connection.query(
-    "INSERT INTO employee SET ?",
-    {
+    "INSERT INTO employee SET ?", {
       first_name: "Jill",
       last_name: "Joolian",
       role_id: 3,
       manager_id: 1
     },
-    function(err, res) {
+    function (err, res) {
       console.log(res.affectedRows + " employee inserted!\n");
-      // Call updateProduct AFTER the INSERT completes
-      // updateProduct();
     }
   );
+  console.log(query.sql);
 }
 
+// Add Department
 function addDepartment() {
   console.log("Inserting a new department... \n");
   var query = connection.query(
-    "INSERT INTO department SET ?", 
-    {
+    "INSERT INTO department SET ?", {
       _name: "Sales"
     },
-    function(err, res) {
+    function (err, res) {
       console.log(res.affectedRows + " department inserted!\n");
     }
-  )
+  );
+  console.log(query.sql);
 }
 
+// Add Role
 function addRole() {
   console.log("Inserting a new role... \n");
   var query = connection.query(
-    "INSERT INTO employee_role SET ?", 
-    {
-      title: "Lawyer",
+    "INSERT INTO employee_role SET ?", {
+      title: "Doctor",
       salary: 132000.00,
-      department_id: 2
+      department_id: 3
     },
-    function(err, res) {
+    function (err, res) {
       console.log(res.affectedRows + " role inserted!\n");
     }
-  )
+  );
+  console.log(query.sql);
 }
 
+// Read Employee Role
+function readEmployeeRole() {
+  console.log("Selecting all products...\n");
+  connection.query("SELECT * FROM employee_role", function(err, res) {
+    if (err) throw err;
+    // Log all results of the SELECT statement
+    console.log(res);
+    connection.end();
+  });
+}
