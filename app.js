@@ -2,6 +2,9 @@ const inquirer = require("inquirer");
 // const path = require("path");
 // const fs = require("fs");
 const create = require("./trackerCRUD");
+const {
+    readDepartment
+} = require("./trackerCRUD");
 
 // Initial prompt that will redirect to Follow up Functions
 // ========================================================
@@ -138,25 +141,27 @@ var addEmployees = () => {
 
     ]).then(data => {
         // Extract Role Name 
-        console.log(
-            create.addEmployee(data.first_name, data.last_name, data.role_id, data.manager_id)
-        );
+        create.addEmployee(data.first_name, data.last_name, data.role_id, data.manager_id)
+
+    }).then(() => {
+        restart();
     })
 }
 
 // Take departments from db and display here
-var showDepartments = () => {
-    console.log("Put Departments Here");
+async function showDepartments() {
+    // Call CRUD
+    create.readDepartment()
 }
 
 // Take roles from db and display here
 var showRoles = () => {
-    console.log("Put Roles Here");
+   create.readEmployeeRole()
 }
 
 // Take employees from db and display here
 var showEmployees = () => {
-    console.log("Put Employees Here");
+    create.readEmployees();
 }
 
 // Update Employees 
@@ -175,9 +180,9 @@ var restart = () => {
                 "No",
             ]
         })
-        .then(function(data) {
+        .then(function (data) {
             switch (data.repeat) {
-               
+
                 case 'Yes':
                     start();
                     break;

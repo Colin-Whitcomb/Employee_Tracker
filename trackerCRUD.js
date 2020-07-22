@@ -85,18 +85,19 @@ class Create {
     connection.query("SELECT * FROM employee_role", function (err, res) {
       if (err) throw err;
       // Log all results of the SELECT statement
-      console.log(res);
+      console.table(res);
       connection.end();
     });
   }
 
   // Read Department 
   readDepartment() {
-    console.log("Selecting department table...\n");
-    connection.query("SELECT * FROM department", function (err, res) {
+    var query = "SELECT * FROM department"
+    // console.log("Selecting department table...\n");
+    connection.query(query, function (err, res) {
       if (err) throw err;
       // Log all results of the SELECT statement
-      console.log(res);
+      console.table(res);
       connection.end();
     });
   }
@@ -104,10 +105,11 @@ class Create {
   // Read Employee 
   readEmployees() {
     // console.log("Selecting roles table...\n");
+   
     connection.query("SELECT * FROM employee", function (err, res) {
       if (err) throw err;
       // Log all results of the SELECT statement
-      console.log(res);
+      console.table(res);
       connection.end();
     });
   }
