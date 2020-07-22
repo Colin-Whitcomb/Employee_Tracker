@@ -1,6 +1,8 @@
 const inquirer = require("inquirer");
-const path = require("path");
-const fs = require("fs");
+// const path = require("path");
+// const fs = require("fs");
+const create = require("./trackerCRUD");
+
 
 // Initial prompt that will redirect to Follow up Functions
 // ========================================================
@@ -52,6 +54,9 @@ var addDepartments = () => {
     }]).then(data => {
         // Extract Department Name 
         console.log(data.department_name);
+
+        create 
+            .addDepartment(data.department_name);
     })
 }
 

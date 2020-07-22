@@ -14,8 +14,6 @@ CREATE TABLE employee(
     PRIMARY KEY(id)
 );
 
-INSERT INTO employee(first_name, last_name, role_id, manager_id)
-VALUES("Bob", "Smith", 1, 12);
 
 -- Department Table --
 CREATE TABLE department(
@@ -24,8 +22,6 @@ CREATE TABLE department(
     PRIMARY KEY(id)
 );
 
-INSERT INTO department (_name)
-VALUES("HR");
 
 -- employee ROLE Table --
 CREATE TABLE employee_role (
@@ -36,6 +32,5 @@ CREATE TABLE employee_role (
     PRIMARY KEY(id)
 );
 
-INSERT INTO employee_role (title, salary)
-VALUES("CEO", 2000000);
+
 
