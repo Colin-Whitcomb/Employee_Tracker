@@ -55,8 +55,8 @@ var addDepartments = () => {
         // Extract Department Name 
         console.log(data.department_name);
 
-        create 
-            .addDepartment(data.department_name);
+         // take collected info and pass to CRUD
+        create.addDepartment(data.department_name);
     })
 }
 
@@ -66,10 +66,27 @@ var addRoles = () => {
         // Name
         type: "input",
         message: "What's the name of the ROLE?",
-        name: "role"
-    }]).then(data => {
+        name: "name"
+    },
+    {
+        // Salary
+        type: "input",
+        message: "What's the salary of the ROLE?",
+        name: "salary"
+    },
+    {
+        // Department ID
+        type: "input",
+        message: "What's the department ID of the ROLE?",
+        name: "department_id"
+    }
+
+]).then(data => {
         // Extract Role Name 
-        console.log(data.role);
+        console.log(data.name);
+
+        // take collected info and pass to CRUD
+        create.addRole(data.name, data.salary, data.department_id);
     })
 }
 
@@ -104,10 +121,7 @@ var addEmployees = () => {
     ]).then(data => {
         // Extract Role Name 
         console.log(
-            data.first_name,
-            data.last_name,
-            data.role_id,
-            data.manager_id
+            create.addEmployee(data.first_name, data.last_name, data.role_id, data.manager_id)
         );
     })
 }

@@ -30,14 +30,14 @@ class Create {
 
 
   // Add Employee
-  addEmployee() {
+  addEmployee(firstName, lastName, roleId, managerId) {
     console.log("Inserting a new employee...\n");
     var query = connection.query(
       "INSERT INTO employee SET ?", {
-        first_name: "Jill",
-        last_name: "Joolian",
-        role_id: 3,
-        manager_id: 1
+        first_name: firstName,
+        last_name: lastName,
+        role_id: roleId,
+        manager_id: managerId
       },
       function (err, res) {
         console.log(res.affectedRows + " employee inserted!\n");
@@ -61,13 +61,13 @@ class Create {
   }
 
   // Add Role
-  addRole() {
+  addRole(name, salary, depId) {
     console.log("Inserting a new role... \n");
     var query = connection.query(
       "INSERT INTO employee_role SET ?", {
-        title: "Doctor",
-        salary: 132000.00,
-        department_id: 3
+        title: name,
+        salary: salary,
+        department_id: depId
       },
       function (err, res) {
         console.log(res.affectedRows + " role inserted!\n");
