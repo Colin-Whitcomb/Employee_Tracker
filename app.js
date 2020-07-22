@@ -3,14 +3,13 @@ const inquirer = require("inquirer");
 // const fs = require("fs");
 const create = require("./trackerCRUD");
 
-
 // Initial prompt that will redirect to Follow up Functions
 // ========================================================
-inquirer.prompt(
-        [{
+function start() {
+    inquirer.prompt({
             type: "list",
-            name: "prompt",
-            message: "What ",
+            name: "action",
+            message: "What would you like to choose?",
             choices: [
                 "Add Departments",
                 "Add Roles",
@@ -20,26 +19,41 @@ inquirer.prompt(
                 "View Employees",
                 "Update Employee Roles",
             ]
-        }, ])
-    .then(data => {
-        // console.log(data);
-        if (data.prompt === 'Add Departments') {
-            addDepartments()
-        } else if (data.prompt === 'Add Roles') {
-            addRoles();
-        } else if (data.prompt === 'Add Employees') {
-            addEmployees();
-        } else if (data.prompt === 'View Departments'){
-            showDepartments();
-        } else if (data.prompt === 'View Roles'){
-            showRoles();
-        }
-         else if (data.prompt === 'View Employees'){
-            showEmployees();
-        } else if (data.prompt === 'Update Employee Roles'){
-            updateRoles();
-        }
-    });
+        })
+        .then(function (data) {
+            switch (data.action) {
+
+                case 'Add Roles':
+                    addRoles();
+                    break;
+
+                case 'Add Employees':
+                    addEmployees();
+                    break;
+
+                case 'View Departments':
+                    showDepartments();
+                    break;
+
+                case 'View Roles':
+                    showRoles();
+                    break;
+
+                case 'View Employees':
+                    showEmployees();
+                    break;
+
+                case 'Update Employee Roles':
+                    updateRoles();
+                    break;
+
+                case 'Add Departments':
+                    addDepartments();
+                    break;
+            }
+        })
+
+}
 
 // Follow up Functions
 // ===================
@@ -55,38 +69,42 @@ var addDepartments = () => {
         // Extract Department Name 
         console.log(data.department_name);
 
-         // take collected info and pass to CRUD
+        // take collected info and pass to CRUD
         create.addDepartment(data.department_name);
+    }).then(() => {
+        restart();
     })
 }
 
 // Add Roles
 var addRoles = () => {
     inquirer.prompt([{
-        // Name
-        type: "input",
-        message: "What's the name of the ROLE?",
-        name: "name"
-    },
-    {
-        // Salary
-        type: "input",
-        message: "What's the salary of the ROLE?",
-        name: "salary"
-    },
-    {
-        // Department ID
-        type: "input",
-        message: "What's the department ID of the ROLE?",
-        name: "department_id"
-    }
+            // Name
+            type: "input",
+            message: "What's the name of the ROLE?",
+            name: "name"
+        },
+        {
+            // Salary
+            type: "input",
+            message: "What's the salary of the ROLE?",
+            name: "salary"
+        },
+        {
+            // Department ID
+            type: "input",
+            message: "What's the department ID of the ROLE?",
+            name: "department_id"
+        }
 
-]).then(data => {
+    ]).then(data => {
         // Extract Role Name 
         console.log(data.name);
 
         // take collected info and pass to CRUD
         create.addRole(data.name, data.salary, data.department_id);
+    }).then(() => {
+        restart();
     })
 }
 
@@ -144,4 +162,32 @@ var showEmployees = () => {
 // Update Employees 
 var updateRoles = () => {
     console.log("Update Employees Here");
-} 
+}
+
+var restart = () => {
+    inquirer
+        .prompt({
+            name: "repeat",
+            type: "list",
+            message: "Would you like to go back to the beginning?",
+            choices: [
+                "Yes",
+                "No",
+            ]
+        })
+        .then(function(data) {
+            switch (data.repeat) {
+               
+                case 'Yes':
+                    start();
+                    break;
+
+                case 'No':
+                    console.log("You have completed your task. Have a nice day!");
+                    break;
+            }
+        })
+}
+
+// Calling initial functions
+start();

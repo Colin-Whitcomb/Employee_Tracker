@@ -18,7 +18,7 @@ var connection = mysql.createConnection({
 
 connection.connect(function (err) {
   // if (err) throw err;
-  console.log("connected as id " + connection.threadId + "\n");
+  // console.log("connected as id " + connection.threadId + "\n");
   // readEmployeeRole();
 
 
@@ -40,7 +40,7 @@ class Create {
         manager_id: managerId
       },
       function (err, res) {
-        console.log(res.affectedRows + " employee inserted!\n");
+        // console.log(res.affectedRows + " employee inserted!\n");
       }
     );
     console.log(query.sql);
@@ -54,7 +54,7 @@ class Create {
         _name: departmentName
       },
       function (err, res) {
-        console.log(res.affectedRows + " department inserted!\n");
+        // console.log(res.affectedRows + " department inserted!\n");
       }
     );
     console.log(query.sql);
@@ -70,7 +70,7 @@ class Create {
         department_id: depId
       },
       function (err, res) {
-        console.log(res.affectedRows + " role inserted!\n");
+        // console.log(res.affectedRows + " role inserted!\n");
       }
     );
     console.log(query.sql);
@@ -103,7 +103,7 @@ class Create {
 
   // Read Employee 
   readEmployees() {
-    console.log("Selecting roles table...\n");
+    // console.log("Selecting roles table...\n");
     connection.query("SELECT * FROM employee", function (err, res) {
       if (err) throw err;
       // Log all results of the SELECT statement
