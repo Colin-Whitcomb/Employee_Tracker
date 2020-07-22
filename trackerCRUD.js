@@ -81,7 +81,7 @@ class Create {
 
   // Read Employee Role
   readEmployeeRole() {
-    console.log("Selecting all employees...\n");
+    // console.log("Selecting all employees...\n");
     connection.query("SELECT * FROM employee_role", function (err, res) {
       if (err) throw err;
       // Log all results of the SELECT statement
@@ -89,6 +89,42 @@ class Create {
       connection.end();
     });
   }
+
+   // Read Employee Role
+   readEmployeeTitle() {
+    // console.log("Selecting all employees...\n");
+    connection.query("SELECT title FROM employee_role", function (err, res) {
+      for (var i = 0; i < res.length; i++) {
+        console.log(
+          i+1 + ") " +
+          res[i].title
+        );
+      }
+      if (err) throw err;
+      // Log all results of the SELECT statement
+      // console.log(res);
+      connection.end();
+    });
+  }
+
+//   updateEmployeeRoles() {
+//     var query = connection.query(
+//       "UPDATE employee_role SET ? WHERE ?",
+//       [{
+//           quantity: 100
+//         },
+//         {
+//           flavor: "Rocky Road"
+//         }
+//       ],
+//       function (err, res) {
+//         console.log(res.affectedRows + " products updated!\n");
+//         // Call deleteProduct AFTER the UPDATE completes
+//         deleteProduct();
+//       }
+//     );
+//   }
+// }
 
   // Read Department 
   readDepartment() {
@@ -105,15 +141,18 @@ class Create {
   // Read Employee 
   readEmployees() {
     // console.log("Selecting roles table...\n");
-   
+
     connection.query("SELECT * FROM employee", function (err, res) {
       if (err) throw err;
       // Log all results of the SELECT statement
       console.table(res);
       connection.end();
     });
-  }
-}
 
+  }
+
+}
 // export this Create class
 module.exports = new Create();
+
+

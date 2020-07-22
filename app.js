@@ -1,10 +1,9 @@
 const inquirer = require("inquirer");
+var mysql = require("mysql");
 // const path = require("path");
 // const fs = require("fs");
 const create = require("./trackerCRUD");
-const {
-    readDepartment
-} = require("./trackerCRUD");
+// const {readDepartment} = require("./trackerCRUD");
 
 // Initial prompt that will redirect to Follow up Functions
 // ========================================================
@@ -156,7 +155,7 @@ async function showDepartments() {
 
 // Take roles from db and display here
 var showRoles = () => {
-   create.readEmployeeRole()
+    create.readEmployeeTitle()
 }
 
 // Take employees from db and display here
@@ -166,7 +165,18 @@ var showEmployees = () => {
 
 // Update Employees 
 var updateRoles = () => {
-    console.log("Update Employees Here");
+    inquirer
+        .prompt({
+            // What role would you like to update?
+            type: "list",
+            message: "What Role do you want to update?",
+            name: "updateRole",
+            choices: [
+                
+            ]
+        }).then(() => {
+            restart();
+        })
 }
 
 var restart = () => {
