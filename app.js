@@ -160,7 +160,7 @@ var showRoles = () => {
 
 // Take employees from db and display here
 var showEmployees = () => {
-    create.readEmployees();
+    create.readEmployeeRole();
 }
 
 // Update Employees 

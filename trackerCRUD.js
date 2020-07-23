@@ -82,7 +82,8 @@ class Create {
   // Read Employee Role
   readEmployeeRole() {
     // console.log("Selecting all employees...\n");
-    connection.query("SELECT * FROM employee_role", function (err, res) {
+    var query = "Select employee.first_name, employee.last_name, employee_role.title, employee_role.salary FROM employee LEFT JOIN employee_role ON employee.role_id = employee_role.id"
+    connection.query(query, function (err, res) {
       if (err) throw err;
       // Log all results of the SELECT statement
       console.table(res);
