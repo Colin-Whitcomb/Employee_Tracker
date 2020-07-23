@@ -193,7 +193,7 @@ function updateRoles() {
             for (var i = 0; i < res.length; i++) {
                 nameArr.push(res[i].first_name + " " + res[i].last_name);
             }
-            console.log(nameArr)
+            // console.log(nameArr)
             grabEmployeeRoles();
             return nameArr;
         })
@@ -206,7 +206,7 @@ function updateRoles() {
             for (var i = 0; i < res.length; i++) {
                 roleArr.push(res[i].title);
             }
-            console.log(roleArr)
+            // console.log(roleArr)
             askInq();
             return roleArr;
 
@@ -229,50 +229,72 @@ function updateRoles() {
                     name: "chooseRole",
                     choices: roleArr,
                 },
+            ]).then(function (response) {
+                console.log(response.chooseRole + " resp chooseRole")
+                    var newDeptId;
+                    var newRole = JSON.stringify(response.chooseRole);
+                    console.log(newRole);
+                    var query = 'SELECT department_id FROM employee_role WHERE employee_role.title = ' + newRole
+                    connection.query(query, function (err, res) {
+                        if (err) throw err;
+                        console.log(res[0]);
+                        console.log(res[1]);
+                        var newDeptId = res.department_id;
+                        // var newId = res.id;
+                        console.log(newDeptId + "New Dept ID");
+                        // updateRole();
+                    })
+                    // updateRole = () => {
+                    //     // console.log("res dot upRole " + response.updateRole)
+                    //     connection.query(
+                    //         `UPDATE employee SET ? WHERE first_name +" "+ last_name = '${response.updateRole}'`,
+                    //         [{
+                    //             role_id: newDeptId
+                    //         }]
+                    //     )}
+                }
+            )}
 
-            ])
+        grabEmployeeNames();
     }
 
-    grabEmployeeNames();
-}
+    var restart = () => {
+        inquirer
+            .prompt({
+                name: "repeat",
+                type: "list",
+                message: "Would you like to go back to the beginning?",
+                choices: [
+                    "Yes",
+                    "No",
+                ]
+            })
+            .then(function (data) {
+                switch (data.repeat) {
 
-var restart = () => {
-    inquirer
-        .prompt({
-            name: "repeat",
-            type: "list",
-            message: "Would you like to go back to the beginning?",
-            choices: [
-                "Yes",
-                "No",
-            ]
-        })
-        .then(function (data) {
-            switch (data.repeat) {
+                    case 'Yes':
+                        start();
+                        break;
 
-                case 'Yes':
-                    start();
-                    break;
+                    case 'No':
+                        console.log("You have completed your task. Have a nice day!");
+                        break;
+                }
+            })
+    }
 
-                case 'No':
-                    console.log("You have completed your task. Have a nice day!");
-                    break;
-            }
-        })
-}
+    // Calling initial functions
+    start();
 
-// Calling initial functions
-start();
+    // grabEmployeeRoles = () => {
+    //     connection.query("SELECT title FROM employe_role ", function (err, res) {
+    //         if (err) throw err;
+    //         for (var i = 0; i < res.length; i++) {
+    //             roleArr.push(res[i].title);
+    //         }
+    //         console.log(roleArr)
+    //         askInq();
+    //         return roleArr;
 
-// grabEmployeeRoles = () => {
-//     connection.query("SELECT title FROM employe_role ", function (err, res) {
-//         if (err) throw err;
-//         for (var i = 0; i < res.length; i++) {
-//             roleArr.push(res[i].title);
-//         }
-//         console.log(roleArr)
-//         askInq();
-//         return roleArr;
-
-//     })
-// }
+    //     })
+    // }
