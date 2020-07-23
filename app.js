@@ -187,11 +187,12 @@ var showEmployees = () => {
 // Update Employees 
 function updateRoles() {
     var nameArr = [];
+
     grabEmployeeNames = () => {
-        connection.query("SELECT first_name, last_name FROM employee", function (err, res) {
+        connection.query("SELECT id, first_name, last_name, role_id FROM employee ORDER BY id ASC", function (err, res) {
             if (err) throw err;
             for (var i = 0; i < res.length; i++) {
-                nameArr.push(res[i].first_name + " " + res[i].last_name);
+                nameArr.push(res[i].id + ": " + res[i].first_name + " " + res[i].last_name + " || Role ID: " + res[i].role_id);
             }
             // console.log(nameArr)
             grabEmployeeRoles();
@@ -200,18 +201,20 @@ function updateRoles() {
     }
 
     var roleArr = [];
-    grabEmployeeRoles = () => {
-        connection.query("SELECT title FROM employee_role ", function (err, res) {
-            if (err) throw err;
-            for (var i = 0; i < res.length; i++) {
-                roleArr.push(res[i].title);
-            }
-            // console.log(roleArr)
-            askInq();
-            return roleArr;
 
-        })
+    grabEmployeeRoles = () => {
+        connection.query(
+            "SELECT employee.role_id, employee_role.title FROM employee LEFT JOIN employee_role ON employee.role_id = employee_role.id ORDER BY employee.role_id ASC;",
+            function (err, res) {
+                if (err) throw err;
+                for (var i = 0; i < res.length; i++) {
+                    roleArr.push(res[i].role_id + ": " + res[i].title);
+                }
+                console.log(roleArr);
+                askInq();
+            })
     }
+
 
     function askInq() {
 
@@ -230,71 +233,71 @@ function updateRoles() {
                     choices: roleArr,
                 },
             ]).then(function (response) {
-                console.log(response.chooseRole + " resp chooseRole")
-                    var newDeptId;
-                    var newRole = JSON.stringify(response.chooseRole);
-                    console.log(newRole);
-                    var query = 'SELECT department_id FROM employee_role WHERE employee_role.title = ' + newRole
-                    connection.query(query, function (err, res) {
+
+                // first character = role_id #
+                console.log(response.chooseRole[0])
+                // 6 meaning CFO
+
+                // first character = employee.id #
+                console.log(response.updateRole[0])
+                // 4 meaning Sandy
+
+
+                updateRole = () => {
+                    // console.log("res dot upRole " + response.updateRole)
+                    connection.query(
+                        "UPDATE employee SET ? WHERE ?",[{role_id: 1},{id: 4}], function (err, res){
                         if (err) throw err;
-                        console.log(res[0]);
-                        console.log(res[1]);
-                        var newDeptId = res.department_id;
-                        // var newId = res.id;
-                        console.log(newDeptId + "New Dept ID");
-                        // updateRole();
-                    })
-                    // updateRole = () => {
-                    //     // console.log("res dot upRole " + response.updateRole)
-                    //     connection.query(
-                    //         `UPDATE employee SET ? WHERE first_name +" "+ last_name = '${response.updateRole}'`,
-                    //         [{
-                    //             role_id: newDeptId
-                    //         }]
-                    //     )}
-                }
-            )}
-
-        grabEmployeeNames();
-    }
-
-    var restart = () => {
-        inquirer
-            .prompt({
-                name: "repeat",
-                type: "list",
-                message: "Would you like to go back to the beginning?",
-                choices: [
-                    "Yes",
-                    "No",
-                ]
-            })
-            .then(function (data) {
-                switch (data.repeat) {
-
-                    case 'Yes':
-                        start();
-                        break;
-
-                    case 'No':
-                        console.log("You have completed your task. Have a nice day!");
-                        break;
-                }
+                      
+                        console.log(res)
+                        restart();
+                    }
+                    )}
+                updateRole();
             })
     }
 
-    // Calling initial functions
-    start();
 
-    // grabEmployeeRoles = () => {
-    //     connection.query("SELECT title FROM employe_role ", function (err, res) {
-    //         if (err) throw err;
-    //         for (var i = 0; i < res.length; i++) {
-    //             roleArr.push(res[i].title);
-    //         }
-    //         console.log(roleArr)
-    //         askInq();
-    //         return roleArr;
+    grabEmployeeNames();
+}
 
-    //     })
-    // }
+var restart = () => {
+    inquirer
+        .prompt({
+            name: "repeat",
+            type: "list",
+            message: "Would you like to go back to the beginning?",
+            choices: [
+                "Yes",
+                "No",
+            ]
+        })
+        .then(function (data) {
+            switch (data.repeat) {
+
+                case 'Yes':
+                    start();
+                    break;
+
+                case 'No':
+                    console.log("You have completed your task. Have a nice day!");
+                    break;
+            }
+        })
+}
+
+// Calling initial functions
+start();
+
+// grabEmployeeRoles = () => {
+//     connection.query("SELECT title FROM employe_role ", function (err, res) {
+//         if (err) throw err;
+//         for (var i = 0; i < res.length; i++) {
+//             roleArr.push(res[i].title);
+//         }
+//         console.log(roleArr)
+//         askInq();
+//         return roleArr;
+
+//     })
+// }

@@ -23,3 +23,15 @@ VALUES("CEO", 2000000);
 -- Select employee_role.title, department._name FROM employee_role LEFT JOIN department ON employee_role.department_id = department.id;
 
 -- Select employee.first_name, employee.last_name, employee_role.title, employee_role.salary FROM employee LEFT JOIN employee_role ON employee.role_id = employee_role.id;
+
+--  SELECT 
+-- 	employee.role_id, 
+-- 	employee_role.title
+--  FROM 
+-- 	employee
+-- LEFT JOIN 
+-- 	employee_role
+-- ON
+-- 	employee.role_id = employee_role.id 
+-- ORDER BY
+-- 	employee.role_id ASC;
