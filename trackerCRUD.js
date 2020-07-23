@@ -31,6 +31,7 @@ class Create {
 
   // Add Employee
   addEmployee(firstName, lastName, roleId, managerId) {
+    console.log("firstName: " + firstName + " " + lastName + " " + roleId + " " + managerId);
     console.log("Inserting a new employee...\n");
     var query = connection.query(
       "INSERT INTO employee SET ?", {
@@ -82,54 +83,17 @@ class Create {
   // Read Employee Role
   readEmployeeRole() {
     // console.log("Selecting all employees...\n");
-    var query = "Select employee.first_name, employee.last_name, employee_role.title, employee_role.salary FROM employee LEFT JOIN employee_role ON employee.role_id = employee_role.id"
-    connection.query(query, function (err, res) {
+    connection.query("SELECT * FROM employee_role", function (err, res) {
       if (err) throw err;
       // Log all results of the SELECT statement
       console.table(res);
       connection.end();
     });
   }
-
-   // Read Employee Role
-   readEmployeeTitle() {
-    // console.log("Selecting all employees...\n");
-    connection.query("SELECT title FROM employee_role", function (err, res) {
-      for (var i = 0; i < res.length; i++) {
-        console.log(
-          i+1 + ") " +
-          res[i].title
-        );
-      }
-      if (err) throw err;
-      // Log all results of the SELECT statement
-      // console.log(res);
-      connection.end();
-    });
-  }
-
-//   updateEmployeeRoles() {
-//     var query = connection.query(
-//       "UPDATE employee_role SET ? WHERE ?",
-//       [{
-//           quantity: 100
-//         },
-//         {
-//           flavor: "Rocky Road"
-//         }
-//       ],
-//       function (err, res) {
-//         console.log(res.affectedRows + " products updated!\n");
-//         // Call deleteProduct AFTER the UPDATE completes
-//         deleteProduct();
-//       }
-//     );
-//   }
-// }
-
+  
   // Read Department 
   readDepartment() {
-    var query = "SELECT * FROM department"
+    var query = "SELECT id, _name FROM department"
     // console.log("Selecting department table...\n");
     connection.query(query, function (err, res) {
       if (err) throw err;
@@ -142,18 +106,15 @@ class Create {
   // Read Employee 
   readEmployees() {
     // console.log("Selecting roles table...\n");
-
-    connection.query("SELECT * FROM employee", function (err, res) {
+    var query = "Select employee.first_name, employee.last_name, employee_role.title, employee_role.salary FROM employee LEFT JOIN employee_role ON employee.role_id = employee_role.id"
+    connection.query(query, function (err, res) {
       if (err) throw err;
       // Log all results of the SELECT statement
       console.table(res);
       connection.end();
     });
-
   }
-
 }
 // export this Create class
 module.exports = new Create();
-
 

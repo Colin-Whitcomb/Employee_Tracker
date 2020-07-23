@@ -1,5 +1,24 @@
-const inquirer = require("inquirer");
+// Set up connection to mysql
+// =========================
 var mysql = require("mysql");
+
+var connection = mysql.createConnection({
+    host: "localhost",
+
+    // Your port; if not 3306
+    port: 3306,
+
+    // Your username
+    user: "root",
+
+    // Your password
+    password: "password",
+    database: "employee_trackerDB"
+});
+
+connection.connect(function (err) {});
+
+const inquirer = require("inquirer");
 // const path = require("path");
 // const fs = require("fs");
 const create = require("./trackerCRUD");
@@ -140,7 +159,8 @@ var addEmployees = () => {
 
     ]).then(data => {
         // Extract Role Name 
-        create.addEmployee(data.first_name, data.last_name, data.role_id, data.manager_id)
+        create
+            .addEmployee(data.first_name, data.last_name, data.role_id, data.manager_id)
 
     }).then(() => {
         restart();
@@ -148,9 +168,10 @@ var addEmployees = () => {
 }
 
 // Take departments from db and display here
-async function showDepartments() {
+function showDepartments() {
     // Call CRUD
     create.readDepartment()
+
 }
 
 // Take roles from db and display here
@@ -160,23 +181,59 @@ var showRoles = () => {
 
 // Take employees from db and display here
 var showEmployees = () => {
-    create.readEmployeeRole();
+    create.readEmployees();
 }
 
 // Update Employees 
-var updateRoles = () => {
-    inquirer
-        .prompt({
-            // What role would you like to update?
-            type: "list",
-            message: "What Role do you want to update?",
-            name: "updateRole",
-            choices: [
-                
-            ]
-        }).then(() => {
-            restart();
+function updateRoles() {
+    var nameArr = [];
+    grabEmployeeNames = () => {
+        connection.query("SELECT first_name, last_name FROM employee", function (err, res) {
+            if (err) throw err;
+            for (var i = 0; i < res.length; i++) {
+                nameArr.push(res[i].first_name + " " + res[i].last_name);
+            }
+            console.log(nameArr)
+            grabEmployeeRoles();
+            return nameArr;
         })
+    }
+
+    var roleArr = [];
+    grabEmployeeRoles = () => {
+        connection.query("SELECT title FROM employee_role ", function (err, res) {
+            if (err) throw err;
+            for (var i = 0; i < res.length; i++) {
+                roleArr.push(res[i].title);
+            }
+            console.log(roleArr)
+            askInq();
+            return roleArr;
+
+        })
+    }
+
+    function askInq() {
+
+        inquirer
+            .prompt([{
+                    // What role would you like to update?
+                    type: "list",
+                    message: "Whose role do you want to update?",
+                    name: "updateRole",
+                    choices: nameArr,
+                },
+                {
+                    type: "list",
+                    message: "What's their new role?",
+                    name: "chooseRole",
+                    choices: roleArr,
+                },
+
+            ])
+    }
+
+    grabEmployeeNames();
 }
 
 var restart = () => {
@@ -206,3 +263,16 @@ var restart = () => {
 
 // Calling initial functions
 start();
+
+// grabEmployeeRoles = () => {
+//     connection.query("SELECT title FROM employe_role ", function (err, res) {
+//         if (err) throw err;
+//         for (var i = 0; i < res.length; i++) {
+//             roleArr.push(res[i].title);
+//         }
+//         console.log(roleArr)
+//         askInq();
+//         return roleArr;
+
+//     })
+// }
