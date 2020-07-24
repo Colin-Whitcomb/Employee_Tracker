@@ -14,11 +14,11 @@ I started this project from opposite ends by establishing the .sql database tabl
 
 ## Table of Contents
 
+* [Instructions - to Use](#instructions)
+
 * [Technologies Used](#technologies_used)
 
 * [Contact](#contact)
-
-* [Instructions - to Use](#instructions)
 
 ## Generated Page - Gif 
 Make New Role / View Employees
