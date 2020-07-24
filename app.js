@@ -88,8 +88,6 @@ var addDepartments = () => {
         name: "department_name"
     }]).then(data => {
         // Extract Department Name 
-        console.log(data.department_name);
-
         // take collected info and pass to CRUD
         create.addDepartment(data.department_name);
     }).then(() => {
@@ -120,8 +118,6 @@ var addRoles = () => {
 
     ]).then(data => {
         // Extract Role Name 
-        console.log(data.name);
-
         // take collected info and pass to CRUD
         create.addRole(data.name, data.salary, data.department_id);
     }).then(() => {
@@ -173,7 +169,7 @@ function showDepartments() {
     create.readDepartment();
     restart();
 
-   
+
 
 }
 
@@ -186,7 +182,7 @@ var showRoles = () => {
 // Take employees from db and display here
 var showEmployees = () => {
     create.readEmployees();
-    restart();    
+    restart();
 }
 
 // Update Employees 
@@ -201,7 +197,7 @@ function updateRoles() {
             }
             // console.log(nameArr)
             grabEmployeeRoles();
-            
+
             return nameArr;
         })
     }
@@ -217,7 +213,6 @@ function updateRoles() {
                 for (var i = 0; i < res.length; i++) {
                     roleArr.push(res[i].id + ": " + res[i].title);
                 }
-                console.log(roleArr);
                 askInq();
             })
     }
@@ -242,24 +237,27 @@ function updateRoles() {
             ]).then(function (response) {
 
                 // first character = role_id #
-                console.log(response.chooseRole[0])
-                // 6 meaning CFO
-
+                // console.log(response.chooseRole[0])
+                
                 // first character = employee.id #
-                console.log(response.updateRole[0])
-                // 4 meaning Sandy
-
-
+                // console.log(response.updateRole[0])
+                
                 updateRole = () => {
                     // console.log("res dot upRole " + response.updateRole)
                     connection.query(
-                        "UPDATE employee SET ? WHERE ?",[{role_id: response.chooseRole[0]},{id: response.updateRole[0]}], function (err, res){
-                        if (err) throw err;
-                      
-                        console.log(res)
-                        restart();
-                    }
-                    )}
+                        "UPDATE employee SET ? WHERE ?", [{
+                            role_id: response.chooseRole[0]
+                        }, {
+                            id: response.updateRole[0]
+                        }],
+                        function (err, res) {
+                            if (err) throw err;
+
+                            // console.log(res)
+                            restart();
+                        }
+                    )
+                }
                 updateRole();
             })
     }
