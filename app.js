@@ -182,6 +182,9 @@ var showRoles = () => {
 // Take employees from db and display here
 var showEmployees = () => {
     create.readEmployees();
+
+   
+    
 }
 
 // Update Employees 
@@ -196,19 +199,21 @@ function updateRoles() {
             }
             // console.log(nameArr)
             grabEmployeeRoles();
+            
             return nameArr;
         })
     }
 
     var roleArr = [];
-
+    // "SELECT employee.role_id, employee_role.title FROM employee LEFT JOIN employee_role ON employee.role_id = employee_role.id ORDER BY employee.role_id ASC;",
+    // this is posting list of roles of current employees instead of showing the current list of all roles in the company.
     grabEmployeeRoles = () => {
         connection.query(
-            "SELECT employee.role_id, employee_role.title FROM employee LEFT JOIN employee_role ON employee.role_id = employee_role.id ORDER BY employee.role_id ASC;",
+            "SELECT id, title FROM employee_role",
             function (err, res) {
                 if (err) throw err;
                 for (var i = 0; i < res.length; i++) {
-                    roleArr.push(res[i].role_id + ": " + res[i].title);
+                    roleArr.push(res[i].id + ": " + res[i].title);
                 }
                 console.log(roleArr);
                 askInq();
@@ -246,7 +251,7 @@ function updateRoles() {
                 updateRole = () => {
                     // console.log("res dot upRole " + response.updateRole)
                     connection.query(
-                        "UPDATE employee SET ? WHERE ?",[{role_id: 1},{id: 4}], function (err, res){
+                        "UPDATE employee SET ? WHERE ?",[{role_id: response.chooseRole[0]},{id: response.updateRole[0]}], function (err, res){
                         if (err) throw err;
                       
                         console.log(res)
