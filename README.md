@@ -11,7 +11,7 @@
 For this assignment, our objective was to create an app that allows the user to view, add, and update various components in a company management setting. 
 
 I started this project from opposite ends by establishing the .sql database tables and then moving to the the inquirer prompts. Once those frameworks were in place, I created the trackerCRUD.js file to test manipulation of the database via javascript. Finally, once both the prompts and the database manipulations were functional, I went ahead and worked to connect the two by using a class constructor to connect app.js and trackerCRUD.js.
-_______
+
 ## Table of Contents
 
 * [Technologies Used](#technologies_used)
