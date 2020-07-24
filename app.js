@@ -170,21 +170,23 @@ var addEmployees = () => {
 // Take departments from db and display here
 function showDepartments() {
     // Call CRUD
-    create.readDepartment()
+    create.readDepartment();
+    restart();
+
+   
 
 }
 
 // Take roles from db and display here
 var showRoles = () => {
-    create.readEmployeeTitle()
+    create.readEmployeeRole()
+    restart();
 }
 
 // Take employees from db and display here
 var showEmployees = () => {
     create.readEmployees();
-
-   
-    
+    restart();    
 }
 
 // Update Employees 

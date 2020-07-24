@@ -86,8 +86,9 @@ class Create {
     connection.query("SELECT * FROM employee_role", function (err, res) {
       if (err) throw err;
       // Log all results of the SELECT statement
+      console.log("         ");
       console.table(res);
-      connection.end();
+      // connection.end();
     });
   }
   
@@ -98,8 +99,9 @@ class Create {
     connection.query(query, function (err, res) {
       if (err) throw err;
       // Log all results of the SELECT statement
+      console.log("         ");
       console.table(res);
-      connection.end();
+      // connection.end();
     });
   }
 
@@ -110,8 +112,9 @@ class Create {
     connection.query(query, function (err, res) {
       if (err) throw err;
       // Log all results of the SELECT statement
+      console.log("         ");
       console.table(res);
-      connection.end();
+      // connection.end();
     });
   }
 }
