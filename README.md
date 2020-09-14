@@ -46,4 +46,4 @@ Make New Role / View Employees
 
 * [Colin Whitcomb](https://github.com/Colin-Whitcomb)
 * [LinkedIn](https://www.linkedin.com/in/colin-whitcomb-b808301a6/)
-* [Portfolio](https://colin-whitcomb.github.io/Portfolio/)
+* [Portfolio](https://colin-whitcomb.github.io/React_Portfolio/)
